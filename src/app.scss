@@ -1,6 +1,16 @@
 body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
 	margin: 0;
 	padding: 0;
 	background-color: #dfe4ea;
-	font-family: sans-serif;
+}
+
+.section {
+	width: 100%;
+	max-width: 980px;
+	margin: 10px auto 40px;
+	box-shadow: 1px 1px 10px #00000030;
+	background-color: #ffffff;
+	padding: 10px 20px;
 }
