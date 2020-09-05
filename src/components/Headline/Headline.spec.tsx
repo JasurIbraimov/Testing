@@ -1,18 +1,16 @@
 import React from 'react'
-import { shallow, ShallowWrapper } from 'enzyme'
-import { findByTestAttr } from '../../../utils'
+import { shallow } from 'enzyme'
+import { findByTestAttr } from '../../../utils/func'
+import { wrapperType, elemsType } from '../../../utils/types'
 import { HeadlinePropsType } from './Headline'
 import Headline from './Headline'
 
-const shallowRender = (props = {}) => shallow(<Headline {...props} />)
+const shallowRender = (props: HeadlinePropsType) =>
+	shallow(<Headline {...props} />)
 describe('Headline Component', () => {
-	let wrapper: ShallowWrapper<
-		HeadlinePropsType,
-		Readonly<{}>,
-		React.Component<HeadlinePropsType, {}, any>
-	>
+	let wrapper: wrapperType
+	let props: HeadlinePropsType
 	describe('when has props', () => {
-		let props: HeadlinePropsType
 		beforeEach(() => {
 			props = {
 				header: 'Posts',
@@ -20,34 +18,54 @@ describe('Headline Component', () => {
 			}
 			wrapper = shallowRender(props)
 		})
+
 		it('renders without errors', () =>
 			expect(findByTestAttr(wrapper, 'headline')).toHaveLength(1))
-		it('renders headline-header', () => {
-			expect(findByTestAttr(wrapper, 'headline-header')).toHaveLength(1)
+
+		describe('headline header', () => {
+			let headerElem: elemsType
+			beforeEach(() => {
+				headerElem = findByTestAttr(wrapper, 'headline-header')
+			})
+			it('renders without errors', () => expect(headerElem).toHaveLength(1))
+			it('renders headline-header with text provided by props: header', () =>
+				expect(headerElem.text()).toBe(props.header))
 		})
-		it('renders headline-header with text provided by props: header', () => {
-			expect(findByTestAttr(wrapper, 'headline-header').text()).toBe(
-				props.header
-			)
-		})
-		it('renders headline-descr', () => {
-			expect(findByTestAttr(wrapper, 'headline-descr')).toHaveLength(1)
-		})
-		it('renders headline-descr with text provided by props: descr', () => {
-			expect(findByTestAttr(wrapper, 'headline-descr').text()).toBe(props.descr)
+
+		describe('headline descr', () => {
+			let descrElem: elemsType
+			beforeEach(() => {
+				descrElem = findByTestAttr(wrapper, 'headline-descr')
+			})
+			it('renders without errors', () => expect(descrElem).toHaveLength(1))
+			it('renders headline-descr with text provided by props: descr', () =>
+				expect(descrElem.text()).toBe(props.descr))
 		})
 	})
 	describe('when has no props', () => {
 		beforeEach(() => {
-			wrapper = shallowRender()
+			props = {}
+			wrapper = shallowRender(props)
 		})
 		it('renders without errors', () =>
 			expect(findByTestAttr(wrapper, 'headline')).toHaveLength(1))
-		it('does not render headline-header', () => {
-			expect(findByTestAttr(wrapper, 'headline-header')).toHaveLength(0)
+		describe('headline header', () => {
+			let headerElem: elemsType
+			beforeEach(() => {
+				headerElem = findByTestAttr(wrapper, 'headline-header')
+			})
+			it('renders without errors', () => expect(headerElem).toHaveLength(1))
+			it('renders headline-header using default props', () =>
+				expect(headerElem.text()).toBe(Headline.defaultProps?.header))
 		})
-		it('does not render headline-descr', () => {
-			expect(findByTestAttr(wrapper, 'headline-descr')).toHaveLength(0)
+		describe('headline descr', () => {
+			let descrElem: elemsType
+			beforeEach(() => {
+				descrElem = findByTestAttr(wrapper, 'headline-descr')
+			})
+			it('renders without errors', () => expect(descrElem).toHaveLength(1))
+			it('renders headline-descr using default props', () =>
+				expect(descrElem.text()).toBe(Headline.defaultProps?.descr))
 		})
 	})
 })

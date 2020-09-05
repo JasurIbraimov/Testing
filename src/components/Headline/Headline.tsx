@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './styles.scss'
 export type HeadlinePropsType = {
 	header?: string
 	descr?: string
 }
-class Headline extends Component<HeadlinePropsType> {
-	render() {
-		const { header, descr } = this.props
-		return (
-			<div data-test='headline'>
-				{header && <h1 data-test='headline-header'>{header}</h1>}
-				{descr && <p data-test='headline-descr'>{descr}</p>}
-			</div>
-		)
-	}
-}
+const Headline: React.FC<HeadlinePropsType> = ({ header, descr }) => (
+	<div data-test='headline'>
+		<h1 data-test='headline-header'>{header}</h1>
+		<hr />
+		<p data-test='headline-descr'>{descr}</p>
+	</div>
+)
 
+Headline.defaultProps = {
+	descr: 'Some text',
+	header: 'Title'
+}
 export default Headline

@@ -1,14 +1,18 @@
 import React from 'react'
-import { shallow, ShallowWrapper } from 'enzyme'
-import { findByTestAttr } from '../../../utils'
+import { shallow } from 'enzyme'
+import { findByTestAttr } from '../../../utils/func'
+import { wrapperType } from '../../../utils/types'
 import Header from './Header'
 const shallowRender = (props = {}) => shallow(<Header {...props} />)
-
+enum DataTestAttrs {
+	Header = 'header'
+}
 describe('Header Component', () => {
-	let wrapper: ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>
-	beforeEach(() => (wrapper = shallowRender()))
-	it('renders without errors', () =>
-		expect(findByTestAttr(wrapper, 'header')).toHaveLength(1))
-	it('renders logo', () =>
-		expect(findByTestAttr(wrapper, 'header-logo')).toHaveLength(1))
+	let wrapper: wrapperType
+	beforeEach(() => {
+		wrapper = shallowRender()
+	})
+	it('renders without errors', () => {
+		expect(findByTestAttr(wrapper, DataTestAttrs.Header)).toHaveLength(1)
+	})
 })
